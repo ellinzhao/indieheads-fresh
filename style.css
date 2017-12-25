@@ -1,0 +1,47 @@
+header {
+    margin: 30px 0 30px 50px;
+}
+body {
+    font-size: 14px;
+}
+.row {
+    margin: 0;
+    padding: 0;
+}
+table {
+    margin-left: 60px;
+}
+tr {
+    background-color: #F5F9FC;
+    border: solid white 3px;
+}
+td {
+    padding: 10px;
+}
+.right-btns {
+    float: right;
+}
+.light {
+    color: gray;
+}
+.btn-sm {
+    margin: 3px;
+}
+.left-cell, .right-cell {
+    vertical-align: top;
+}
+.fa-heart {
+    margin-right: 5px;
+}
+.fa-heart:hover {
+    color: #BB2D58;
+    cursor: pointer;
+}
+
+.fa-times-circle:hover {
+    color: #CBDAFC;
+    cursor: pointer;
+}
+.liked {
+    color: #BB2D58;
+}
