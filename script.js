@@ -3,7 +3,7 @@ const redditURL = 'https://www.reddit.com/r/indieheads/new.json?sort=new&limit=5
 const apiKey = 'c763c0f97b3861a17100b676c05e477d';
 const sharedSecret	= '9dad2a267479d0e70208aff78c078193';
 
-var ex = 'http://ws.audioscrobbler.com//2.0/?method=artist.getsimilar&artist=cher&api_key=c763c0f97b3861a17100b676c05e477d&format=json'
+var ex = 'http://ws.audioscrobbler.com//2.0/?method=artist.getsimilar&artist=cher&api_key=c763c0f97b3861a17100b676c05e477d&format=json';
 
 var likedArtists = [];
 
@@ -13,7 +13,6 @@ var rightCell = '<td class="right-cell">' + deleteBtn + '</td>';
 
 
 function displayData(data) {
-    const table = $('table');
     var pattern = /.*\[FRESH](.*)-(.*)/ig;
     var posts = data.data.children;
     for (var i = 0; i < posts.length; i++) {
@@ -24,20 +23,24 @@ function displayData(data) {
             var artist = match[1].trim();
             var song = match[2].trim();
             var id = 'toggle-row-' + i;
-
-            var playBtn = '<a href="'+ url + '" target="_blank"><i class="fas fa-play-circle"></i></a>';
-            var leftCell = '<td class="left-cell">' + likeBtn + playBtn + '</td>';
-            var middleCell = '<td data-toggle="collapse" href="#' + id + '" class="middle-cell" aria-expanded="false" aria-controls="' + id + '">' +
-                                '<span class="artist">' + artist + '</span>' + '<br/>' + song +
-                                '<div id="' + id + '" class="collapse" role="tabpanel"></div>' +
-                             '</td>';
-            table.append('<tr id="' + "row-" + i +'">' + leftCell + middleCell + rightCell + '</tr>');
+            findSimilar(artist, song, url, id, i);
         }
     }
 }
 
+function formatRow(artist, song, url, id, i, similar) {
+    const table = $('table');
+    var playBtn = '<a href="'+ url + '" target="_blank"><i class="fas fa-play-circle"></i></a>';
+    var leftCell = '<td class="left-cell">' + likeBtn + playBtn + '</td>';
+    var middleCell = '<td data-toggle="collapse" href="#' + id + '" class="middle-cell" aria-expanded="false" aria-controls="' + id + '">' +
+        '<span class="artist">' + artist + '</span>' + '<br/>' + '<span class="light">' + song + '</span>' +
+        '<div id="' + id + '" class="collapse" role="tabpanel"><br/>' + similar + '</div>' +
+        '</td>';
+    table.append('<tr id="' + "row-" + i +'">' + leftCell + middleCell + rightCell + '</tr>');
+}
 
-function findSimilar(artist, row) {
+
+function findSimilar(artist, song, url, id, j) {
     $.ajax({
         type: 'GET',
         url: 'http://ws.audioscrobbler.com/2.0',
@@ -49,22 +52,30 @@ function findSimilar(artist, row) {
             format: 'json'
         },
         dataType: "jsonp",
-        jsonpCallback: 'jsonp_callback',
+
         contentType: 'application/json',
         success: function(data) {
-            var list = row.children('div');
-            var arr = data.similarartists.artist;
-            var resultsLen = arr.length;
-            if (resultsLen) {
-                for (var i = 0; i < resultsLen; i++) {
-                    list.append(arr[i].name + '<br/>');
-                }
+            var similarArtists = ['<div>'];
+            if (data.similarartists === undefined) {
+                similarArtists.push('None found, sorry!<br/>')
             } else {
-                list.append('None found, sorry!<br/>')
+                var arr = data.similarartists.artist;
+                var resultsLen = arr.length;
+                if (resultsLen) {
+                    for (var i = 0; i < resultsLen; i++) {
+                        similarArtists.push(arr[i].name);
+                        similarArtists.push('<br/>');
+                    }
+                } else {
+                    similarArtists.push('None found, sorry!<br/>')
+                }
             }
+            similarArtists.push('</div>');
+            var similarArtistStr = similarArtists.join('');
+            formatRow(artist, song, url, id, j, similarArtistStr)
         },
         error: function() {
-            console.log("error");
+            console.log("error in finding similar artists.");
         }
     });
 }
@@ -82,19 +93,10 @@ jQuery(document).ready(function($) {
     const likedTags = $('#liked');
 
     // TODO: handle edge cases ('UMO - SB - 05')
-    $('table').on('click', 'tr', function() {
-        var artist = $(this).children('.middle-cell').children('.artist').text();
-        console.log(artist);
-        findSimilar(artist, $(this).children('.middle-cell'));
-    });
 
     $('table').on('click', 'tr .right-cell .fa-times-circle', function() {
         $(this).parent().parent().remove();
-    });
-
-    // TODO: change to hashSet?
-    // TODO: function to export names of songs
-    $('table').on('click', 'tr .fa-heart', function() {
+    }).on('click', 'tr .fa-heart', function() {
         var artist = $(this).parent().parent().parent().children('.middle-cell').children('.artist').text();
         if (likedArtists.indexOf(artist) !== -1) {
             likedArtists.splice(likedArtists.indexOf(artist), 1);
@@ -102,8 +104,12 @@ jQuery(document).ready(function($) {
         } else {
             $(this).addClass('liked');
             likedArtists.push(artist);
-            likedTags.append('#' + artist + '&ensp;');
         }
     });
+
+
+    // TODO: change to hashSet?
+    // TODO: function to generate playlist
+    // TODO: make nicer transitions
 
 });

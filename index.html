@@ -2,23 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111635019-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-111635019-1');
+    </script>
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <title>Title</title>
 </head>
 <body>
-    <header>fresh</header>
+    <header></header>
+    <div class="row">
+        <div class="col col-sm-2">
+            <div id="title-links">
+                <br/>fresh<br/><br/>
+                <a href="https://www.reddit.com/r/indieheads/" target="_blank">/r/indieheads</a><br/>
+                <a href="#">get playlist</a><br/>
+                <a href="#">report a bug</a><br/><br/><br/>
+            </div>
 
-<!-- data-children? is item class needed? -->
-    <table width=80%>
-        <colgroup>
-            <col><col><col>
-        </colgroup>
-    </table>
-
-    <div id="liked">
-
+            <div id="descr">
+                <p class="descr">
+                    fresh new songs as suggested<br/>
+                    on /r/indieheads... and more!<br/><br/>
+                    Click on a row to find<br/>
+                    some similar artists.<br/><br/>
+                    (Coming soon) Click&ensp;<i class="fas fa-heart fa-xs"></i>
+                    and generate a playlist with songs from the artists that you like!<br/><br/>
+                </p>
+            </div>
+        </div>
+        <div class="col col-sm-10">
+            <table width=90%>
+                <colgroup>
+                    <col id="left-col"><col id="middle-col"><col id="right-col">
+                </colgroup>
+            </table>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

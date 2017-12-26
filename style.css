@@ -1,47 +1,84 @@
+@font-face {
+    font-family: 'Nunito Sans';
+    src: url('nunito-sans/NunitoSans-Regular.ttf');
+}
+
+html {
+    overflow-y: scroll;
+}
 header {
-    margin: 30px 0 30px 50px;
+    margin-bottom: 70px;
 }
 body {
+    font-family: 'Nunito Sans', "Helvetica Neue", sans-serif;
     font-size: 14px;
 }
-.row {
-    margin: 0;
-    padding: 0;
-}
 table {
-    margin-left: 60px;
+    margin: 0 0 0 25px;
 }
 tr {
-    background-color: #F5F9FC;
     border: solid white 3px;
 }
 td {
     padding: 10px;
 }
-.right-btns {
-    float: right;
+.row {
+    padding: 0;
+    margin: 0;
 }
 .light {
     color: gray;
 }
-.btn-sm {
-    margin: 3px;
-}
 .left-cell, .right-cell {
     vertical-align: top;
 }
+.left-cell {
+    float: right;
+}
+#middle-col {
+    background-color: #F5F9FC;
+}
+.middle-cell:hover {
+    cursor: pointer;
+}
+#left-col {
+    width: 60px;
+}
+#right-col {
+    width: 30px;
+}
 .fa-heart {
     margin-right: 5px;
+    color: lightgray;
 }
 .fa-heart:hover {
     color: #BB2D58;
     cursor: pointer;
 }
-
 .fa-times-circle:hover {
     color: #CBDAFC;
     cursor: pointer;
 }
 .liked {
     color: #BB2D58;
+}
+
+.col {
+    padding: 0;
+}
+.col-sm-2 {
+    text-align: right;
+    padding: 0 0 0 25px;
+}
+.col-sm-2 a {
+    margin: 0 0 15px 0;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.descr {
+    font-size: 12px;
+    color: gray;
+    font-style: oblique;
 }
