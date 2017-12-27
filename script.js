@@ -43,7 +43,7 @@ function formatRow(artist, song, url, id, i, similar) {
 function findSimilar(artist, song, url, id, j) {
     $.ajax({
         type: 'GET',
-        url: 'http://ws.audioscrobbler.com/2.0',
+        url: 'https://ws.audioscrobbler.com/2.0',
         data: {
             api_key: apiKey,
             artist: artist,
